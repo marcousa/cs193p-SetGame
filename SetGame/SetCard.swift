@@ -11,33 +11,34 @@ import Foundation
 struct SetCard: CustomStringConvertible
 {
     var description: String {
-        return "\(number) \(shading) \(color) \(number.rawValue == 1 ? shape.rawValue : shape.rawValue + "s")"
+        return "\(number) \(shading) \(color) \(number.rawValue == 1 ? "item" : "items") of \(shape)"
     }
     
-    var shape: Shape
+    private(set) var shape: Shape
     var color: Color
     var number: Number
     var shading: Shading
+    var matched: Bool
     
-    enum Shape: String, CustomStringConvertible {
-        var description: String { return self.rawValue }
+    enum Shape: Int, CustomStringConvertible {
+        var description: String { return "shape: \(self.rawValue)" }
         
-        case oval = "oval"
-        case squiggle = "squiggle"
-        case diamond = "diamond"
+        case shapeOne = 0
+        case shapeTwo = 1
+        case shapeThree = 2
         
-        static var all: [Shape] = [.oval, .squiggle, .diamond]
+        static var all: [Shape] = [.shapeOne, .shapeTwo, .shapeThree]
         
     }
     
-    enum Color: String, CustomStringConvertible {
-        var description: String { return "\(self.rawValue)" }
+    enum Color: Int, CustomStringConvertible {
+        var description: String { return "color: \(self.rawValue)" }
         
-        case red
-        case purple
-        case green
+        case a = 0
+        case b = 1
+        case c = 2
         
-        static var all: [Color] = [.red, .purple, .green]
+        static var all: [Color] = [.a, .b, .c]
     }
     
     enum Number: Int, CustomStringConvertible {

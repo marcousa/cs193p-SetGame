@@ -17,7 +17,7 @@ struct SetDeck
             for color in SetCard.Color.all {
                 for number in SetCard.Number.all {
                     for shading in SetCard.Shading.all {
-                        cards.append(SetCard.init(shape: shape, color: color, number: number, shading: shading))
+                        cards.append(SetCard.init(shape: shape, color: color, number: number, shading: shading, matched: false))
                     }
                 }
             }
