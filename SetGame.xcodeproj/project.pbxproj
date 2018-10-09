@@ -12,6 +12,8 @@
 		A914A242216C38220098F559 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A914A240216C38220098F559 /* Main.storyboard */; };
 		A914A244216C38240098F559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A914A243216C38240098F559 /* Assets.xcassets */; };
 		A914A247216C38240098F559 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A914A245216C38240098F559 /* LaunchScreen.storyboard */; };
+		A914A250216C38660098F559 /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A914A24F216C38660098F559 /* SetCard.swift */; };
+		A914A252216C3E490098F559 /* SetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A914A251216C3E490098F559 /* SetDeck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		A914A243216C38240098F559 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A914A246216C38240098F559 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A914A248216C38240098F559 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A914A24F216C38660098F559 /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
+		A914A251216C3E490098F559 /* SetDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDeck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,24 @@
 		A914A23B216C38220098F559 /* SetGame */ = {
 			isa = PBXGroup;
 			children = (
-				A914A23C216C38220098F559 /* AppDelegate.swift */,
 				A914A23E216C38220098F559 /* ViewController.swift */,
+				A914A24F216C38660098F559 /* SetCard.swift */,
+				A914A251216C3E490098F559 /* SetDeck.swift */,
 				A914A240216C38220098F559 /* Main.storyboard */,
 				A914A243216C38240098F559 /* Assets.xcassets */,
-				A914A245216C38240098F559 /* LaunchScreen.storyboard */,
 				A914A248216C38240098F559 /* Info.plist */,
+				A914A24E216C38490098F559 /* Supporting Files */,
 			);
 			path = SetGame;
+			sourceTree = "<group>";
+		};
+		A914A24E216C38490098F559 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A914A23C216C38220098F559 /* AppDelegate.swift */,
+				A914A245216C38240098F559 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +150,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A914A23F216C38220098F559 /* ViewController.swift in Sources */,
+				A914A250216C38660098F559 /* SetCard.swift in Sources */,
 				A914A23D216C38220098F559 /* AppDelegate.swift in Sources */,
+				A914A252216C3E490098F559 /* SetDeck.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

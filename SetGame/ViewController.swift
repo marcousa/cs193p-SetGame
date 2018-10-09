@@ -10,9 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var deck = SetDeck()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        for _ in 0...9 {
+            if let card = deck.draw() {
+                print(card)
+            }
+        }
+        
     }
 
 
