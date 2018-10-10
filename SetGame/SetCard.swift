@@ -18,7 +18,6 @@ struct SetCard: CustomStringConvertible
     let color: Color
     let number: Number
     let shading: Shading
-    private(set) var matched: Bool
     
     enum Shape: Int, CustomStringConvertible {
         var description: String { return "shape: \(self.rawValue)" }
