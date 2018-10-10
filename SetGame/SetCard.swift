@@ -14,11 +14,11 @@ struct SetCard: CustomStringConvertible
         return "\(number) \(shading) \(color) \(number.rawValue == 1 ? "item" : "items") of \(shape)"
     }
     
-    private(set) var shape: Shape
-    var color: Color
-    var number: Number
-    var shading: Shading
-    var matched: Bool
+    let shape: Shape
+    let color: Color
+    let number: Number
+    let shading: Shading
+    private(set) var matched: Bool
     
     enum Shape: Int, CustomStringConvertible {
         var description: String { return "shape: \(self.rawValue)" }
