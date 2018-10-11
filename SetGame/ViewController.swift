@@ -110,44 +110,42 @@ class ViewController: UIViewController {
     @IBAction private func touchCard(_ sender: UIButton) {
         // Figure out what card the user clicked on
         if let buttonIndex = cardButtons.firstIndex(of: sender) {
-            // Make sure that card is one of the cardsInPlay
-            if buttonIndex < cardsInPlay.count {
-                let selectedCard = cardsInPlay[buttonIndex]
-                // Ensure the card was not already selected
-                if !selectedCards.contains(selectedCard) {
-                    // Add it to the selected cards array
-                    selectedCards.append(selectedCard)
-                    // Update the view to show it as selected
-                    cardButtons[buttonIndex].layer.borderWidth = Constants.selectedBorderWidth
-                    cardButtons[buttonIndex].layer.borderColor = Constants.selectedBorderColor
-                    print("You selected \(selectedCard)")
-                    
-                } else {
-                    // If card was already selected, find its index in the selectedCards array and remove it
-                    let indexInSelectedCards = selectedCards.firstIndex(of: selectedCard)!
-                    selectedCards.remove(at: indexInSelectedCards)
-                    // then update the view to show that the card is now de-selected
-                    cardButtons[buttonIndex].layer.borderWidth = Constants.normalBorderWidth
-                    cardButtons[buttonIndex].layer.borderColor = Constants.normalBorderColor
-                    print("You de-selected \(selectedCard)")
-                }
-            } else {
-                // The card that was clicked was not in play, so ignore the action
-                print("The selected card was not in play (not in the cardsInPlay array)")
-            }
+            // change it to selected or de-selected
+            changeButtonState(forIndex: buttonIndex)
             
+            // if 3 cards have been selected, check if it's a match
+            if(selectedCards.count == 3) {
+                
+            }
             
         } else {
             print("Could not identify the selected card")
         }
-        
-        
-        
-        
-        
-        
-        
-        
+    }
+    
+    private func changeButtonState(forIndex buttonIndex: Int) {
+        // Make sure that card is one of the cardsInPlay
+        if buttonIndex < cardsInPlay.count {
+            let selectedCard = cardsInPlay[buttonIndex]
+            // Ensure the card was not already selected
+            if !selectedCards.contains(selectedCard) {
+                // Add it to the selected cards array
+                selectedCards.append(selectedCard)
+                // Update the view to show it as selected
+                cardButtons[buttonIndex].layer.borderWidth = Constants.selectedBorderWidth
+                cardButtons[buttonIndex].layer.borderColor = Constants.selectedBorderColor
+            } else {
+                // If card was already selected, find its index in the selectedCards array and remove it
+                let indexInSelectedCards = selectedCards.firstIndex(of: selectedCard)!
+                selectedCards.remove(at: indexInSelectedCards)
+                // then update the view to show that the card is now de-selected
+                cardButtons[buttonIndex].layer.borderWidth = Constants.normalBorderWidth
+                cardButtons[buttonIndex].layer.borderColor = Constants.normalBorderColor
+            }
+        } else {
+            // The card that was clicked was not in play, so ignore the action
+            print("The selected card was not in play (not in the cardsInPlay array)")
+        }
     }
     
 }
