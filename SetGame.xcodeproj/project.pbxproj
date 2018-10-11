@@ -13,7 +13,6 @@
 		A914A244216C38240098F559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A914A243216C38240098F559 /* Assets.xcassets */; };
 		A914A247216C38240098F559 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A914A245216C38240098F559 /* LaunchScreen.storyboard */; };
 		A914A250216C38660098F559 /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A914A24F216C38660098F559 /* SetCard.swift */; };
-		A914A252216C3E490098F559 /* SetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = A914A251216C3E490098F559 /* SetDeck.swift */; };
 		A914A254216EFF2E0098F559 /* SetEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A914A253216EFF2D0098F559 /* SetEngine.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +25,6 @@
 		A914A246216C38240098F559 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A914A248216C38240098F559 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A914A24F216C38660098F559 /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
-		A914A251216C3E490098F559 /* SetDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDeck.swift; sourceTree = "<group>"; };
 		A914A253216EFF2D0098F559 /* SetEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,7 +60,6 @@
 			children = (
 				A914A23E216C38220098F559 /* ViewController.swift */,
 				A914A24F216C38660098F559 /* SetCard.swift */,
-				A914A251216C3E490098F559 /* SetDeck.swift */,
 				A914A253216EFF2D0098F559 /* SetEngine.swift */,
 				A914A240216C38220098F559 /* Main.storyboard */,
 				A914A243216C38240098F559 /* Assets.xcassets */,
@@ -156,7 +153,6 @@
 				A914A250216C38660098F559 /* SetCard.swift in Sources */,
 				A914A254216EFF2E0098F559 /* SetEngine.swift in Sources */,
 				A914A23D216C38220098F559 /* AppDelegate.swift in Sources */,
-				A914A252216C3E490098F559 /* SetDeck.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
