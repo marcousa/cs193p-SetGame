@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SetCard: CustomStringConvertible
+struct SetCard: CustomStringConvertible, Equatable
 {
     var description: String {
         return "\(number) \(shading) \(color) \(number.rawValue == 1 ? "item" : "items") of \(shape)"
@@ -18,6 +18,13 @@ struct SetCard: CustomStringConvertible
     let color: Color
     let number: Number
     let shading: Shading
+    
+    static func ==(lhs: SetCard, rhs: SetCard) -> Bool {
+        return  lhs.shape == rhs.shape &&
+                lhs.color == rhs.color &&
+                lhs.number == rhs.number &&
+                lhs.shading == rhs.shading
+    }
     
     enum Shape: Int, CustomStringConvertible {
         var description: String { return "shape: \(self.rawValue)" }

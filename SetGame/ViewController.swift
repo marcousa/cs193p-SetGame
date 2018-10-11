@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     private(set) var deck = SetDeck()
     private(set) var selectedCards = [SetCard]()
     private(set) var matchedCards = [SetCard]()
+    private(set) var cardsInPlay = [SetCard]()
     var preferredFontSize: CGFloat = 25
     
     private let shapes: [Int:String] = [
@@ -27,21 +28,33 @@ class ViewController: UIViewController {
         2: [0,0,1]
     ]
     
+    private struct Constants {
+        static let selectedBorderWidth: CGFloat = 3.0
+        static let selectedBorderColor = UIColor.blue.cgColor
+        static let normalBorderWidth: CGFloat = 1.0
+        static let normalBorderColor = UIColor.black.cgColor
+        static let cornerRadius: CGFloat = 8.0
+    }
+    
     @IBOutlet private var cardButtons: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //setup the first 12 cards when the game starts
         for button in 0...11 {
             //set the first twelve cards to have a thin black background
-            cardButtons[button].layer.borderWidth = 1.0
-            cardButtons[button].layer.borderColor = UIColor.black.cgColor
-            cardButtons[button].layer.cornerRadius = 8.0
+            cardButtons[button].layer.borderWidth = Constants.normalBorderWidth
+            cardButtons[button].layer.borderColor = Constants.normalBorderColor
+            cardButtons[button].layer.cornerRadius = Constants.cornerRadius
             
             //get 12 cards out of the deck and display them
             if let card = deck.draw() {
                 let title = make(card: card) ?? NSAttributedString(string: "??")
                 cardButtons[button].setAttributedTitle(title, for: .normal)
+                cardsInPlay.append(card)
+            } else {
+                print("No more cards in the deck!")
             }
         }
     }
@@ -90,9 +103,51 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func drawThreeCards(_ sender: UIButton) {
-
+        // ALWAYS MAKE SURE WHEN YOU ADD A CARD THAT ITS POSITION IN THE cardsInPlay ARRAY MATCHES THE CORRESPONDING INDEX OF ITS cardButton
     }
     
 
-
+    @IBAction private func touchCard(_ sender: UIButton) {
+        // Figure out what card the user clicked on
+        if let buttonIndex = cardButtons.firstIndex(of: sender) {
+            // Make sure that card is one of the cardsInPlay
+            if buttonIndex < cardsInPlay.count {
+                let selectedCard = cardsInPlay[buttonIndex]
+                // Ensure the card was not already selected
+                if !selectedCards.contains(selectedCard) {
+                    // Add it to the selected cards array
+                    selectedCards.append(selectedCard)
+                    // Update the view to show it as selected
+                    cardButtons[buttonIndex].layer.borderWidth = Constants.selectedBorderWidth
+                    cardButtons[buttonIndex].layer.borderColor = Constants.selectedBorderColor
+                    print("You selected \(selectedCard)")
+                    
+                } else {
+                    // If card was already selected, find its index in the selectedCards array and remove it
+                    let indexInSelectedCards = selectedCards.firstIndex(of: selectedCard)!
+                    selectedCards.remove(at: indexInSelectedCards)
+                    // then update the view to show that the card is now de-selected
+                    cardButtons[buttonIndex].layer.borderWidth = Constants.normalBorderWidth
+                    cardButtons[buttonIndex].layer.borderColor = Constants.normalBorderColor
+                    print("You de-selected \(selectedCard)")
+                }
+            } else {
+                // The card that was clicked was not in play, so ignore the action
+                print("The selected card was not in play (not in the cardsInPlay array)")
+            }
+            
+            
+        } else {
+            print("Could not identify the selected card")
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
 }
