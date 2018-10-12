@@ -50,10 +50,7 @@ struct SetEngine {
             if !selectedCards.contains(selectedCard) {
                 // Add it to the selected cards array
                 selectedCards.append(selectedCard)
-                // if 3 cards are now selected, check for a match
-                if(selectedCards.count == 3) {
-                    print("3 cards have been selected")
-                }
+                print("selectedCards: \(selectedCards)")
             } else {
                 //If card was already selected, find its index and remove it from selectedCards
                 let indexInSelectedCards = selectedCards.firstIndex(of: selectedCard)!
@@ -64,7 +61,7 @@ struct SetEngine {
         }
     }
  
-    mutating func checkForAMatch() {
+    mutating func checkForAMatch() -> Bool {
         // Check for a Set
         // if they match, remove them from selectedCards and cardsInPlay Arrays and add to matchedCardsArray
         if(cardsAreASet(first: selectedCards[0], second: selectedCards[1], third: selectedCards[2])) {
@@ -80,15 +77,16 @@ struct SetEngine {
                 matchedCards.append(card)
             }
             score += Constants.scoreForSet
+            return true
         } else {
             // if they don't match, remove them from the selectedCards Array
             selectedCards.removeAll()
             score -= Constants.penaltyForNonSet
+            return false
         }
-        
-        
     }
     
+    // MARK: TODO: rework this function to use Set instead of if statements
     private func cardsAreASet(first: SetCard, second: SetCard, third: SetCard) -> Bool {
         // Either everything is different OR one of the 4 attributes is consistant across the 3 cards
         if(
