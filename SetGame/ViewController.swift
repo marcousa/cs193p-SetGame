@@ -36,6 +36,7 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet weak var scoreLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,17 +109,20 @@ class ViewController: UIViewController {
                 // remove that button from the selectedButtonsArray
                 selectedButtons.remove(at: selectedButtons.firstIndex(of: sender)!)
             } else {
+                // if the card is not already selected
+                // figure out if the button is an active card or not
                 if(buttonIndex < game.cardsInPlay.count) {
-                    // mark the button as selected
+                    // if the button is an active card mark the button as selected
                     button.layer.borderWidth = Constants.selectedBorderWidth
                     button.layer.borderColor = Constants.selectedBorderColor
                     // add the button to the selectedButtonsArray
                     selectedButtons.append(button)
                 }
             }
-            
+            // if 3 buttons have been selected, check for a match
             if selectedButtons.count == 3 {
                 game.checkForAMatch()
+                // regardless of whether there's a match or not, reset the buttons as not selected
                 selectedButtons.forEach() {
                     $0.layer.borderWidth = Constants.normalBorderWidth
                     $0.layer.borderColor = Constants.normalBorderColor
@@ -138,24 +142,25 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = Constants.cornerRadius
     }
     
-    private func markButtonAsSelectedOrDeSelected(forButtonAtIndex buttonIndex: Int) {
-        let card = game.cardsInPlay[buttonIndex]
-        let button = cardButtons[buttonIndex]
-        
-        if(game.selectedCards.contains(card)) {
-            button.layer.borderWidth = Constants.selectedBorderWidth
-            button.layer.borderColor = Constants.selectedBorderColor
-        } else {
-            button.layer.borderWidth = Constants.normalBorderWidth
-            button.layer.borderColor = Constants.normalBorderColor
-        }
-        
-    }
+//    private func markButtonAsSelectedOrDeSelected(forButtonAtIndex buttonIndex: Int) {
+//        let card = game.cardsInPlay[buttonIndex]
+//        let button = cardButtons[buttonIndex]
+//
+//        if(game.selectedCards.contains(card)) {
+//            button.layer.borderWidth = Constants.selectedBorderWidth
+//            button.layer.borderColor = Constants.selectedBorderColor
+//        } else {
+//            button.layer.borderWidth = Constants.normalBorderWidth
+//            button.layer.borderColor = Constants.normalBorderColor
+//        }
+//
+//    }
     
     private func updateViewFromModel() {
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
-            
+            // if the button is beyond the range of the cards in play, make it transparent
+            // otherwise set it as the drawn card
             if buttonIndex < game.cardsInPlay.count {
                 let card = game.cardsInPlay[buttonIndex]
                 button.setAttributedTitle(make(card: card), for: .normal)
@@ -165,12 +170,7 @@ class ViewController: UIViewController {
                 button.layer.borderWidth = 0
             }
         }
-        
-//        for index in game.cardsInPlay.indices {
-//            let card = game.cardsInPlay[index]
-//            let button = cardButtons[index]
-//            button.setAttributedTitle(make(card: card), for: .normal)
-//        }
+        scoreLabel.text = "Score: \(game.score)"
     }
     
 }

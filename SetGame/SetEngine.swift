@@ -14,6 +14,12 @@ struct SetEngine {
     private(set) var selectedCards = [SetCard]()
     private(set) var matchedCards = [SetCard]()
     private(set) var cardsInPlay = [SetCard]()
+    private(set) var score = 0
+    
+    private struct Constants {
+        static let scoreForSet = 1
+        static let penaltyForNonSet = 1
+    }
     
     init() {
         for shape in SetCard.Shape.all {
@@ -73,9 +79,11 @@ struct SetEngine {
                 // add the card to the matchedCards array
                 matchedCards.append(card)
             }
+            score += Constants.scoreForSet
         } else {
             // if they don't match, remove them from the selectedCards Array
             selectedCards.removeAll()
+            score -= Constants.penaltyForNonSet
         }
         
         
