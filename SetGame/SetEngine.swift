@@ -28,13 +28,10 @@ struct SetEngine {
         cards.shuffle()
     }
     
-    mutating func draw() -> SetCard? {
+    mutating func draw() {
         if cards.count > 0 {
             let cardDrawn = cards.remove(at: cards.count.arc4random)
             cardsInPlay.append(cardDrawn)
-            return cardDrawn
-        } else {
-            return nil
         }
     }
     
@@ -49,7 +46,7 @@ struct SetEngine {
                 selectedCards.append(selectedCard)
                 // if 3 cards are now selected, check for a match
                 if(selectedCards.count == 3) {
-                    checkForAMatch()
+                    print("3 cards have been selected")
                 }
             } else {
                 //If card was already selected, find its index and remove it from selectedCards
@@ -62,7 +59,50 @@ struct SetEngine {
     }
  
     mutating func checkForAMatch() {
-        print("Called checkForAMatch()")
+        // Check for a Set
+        // if they match, remove them from selectedCards and cardsInPlay Arrays and add to matchedCardsArray
+        if(cardsAreASet(first: selectedCards[0], second: selectedCards[1], third: selectedCards[2])) {
+            while(selectedCards.first != nil) {
+                let card = selectedCards.first!
+                // find the index of that card in cardsInPlay and remove it
+                if let indexInCardsInPlay = cardsInPlay.firstIndex(of: card) {
+                    cardsInPlay.remove(at: indexInCardsInPlay)
+                }
+                // remove the card from the selectedCards array
+                selectedCards.removeFirst()
+                // add the card to the matchedCards array
+                matchedCards.append(card)
+            }
+        } else {
+            // if they don't match, remove them from the selectedCards Array
+            selectedCards.removeAll()
+        }
+        
+        
+    }
+    
+    private func cardsAreASet(first: SetCard, second: SetCard, third: SetCard) -> Bool {
+        // Either everything is different OR one of the 4 attributes is consistant across the 3 cards
+        if(
+            (first.shape != second.shape && first.shape != third.shape) &&
+                (first.color != second.color && first.color != third.color) &&
+                (first.number != second.number && first.number != third.number) &&
+                (first.shading != second.shading && first.shading != third.shading)
+            ) {
+            print("Cards were a Set!")
+            return true
+        } else if(
+            (first.shape == second.shape && first.shape == third.shape) ||
+                (first.color == second.color && first.color == third.color) ||
+                (first.number == second.number && first.number == third.number) ||
+                (first.shading == second.shading && first.shading == third.shading)
+            ) {
+            print("Cards were a Set!")
+            return true
+        } else {
+            print("Cards were NOT a set")
+            return false
+        }
     }
     
 }

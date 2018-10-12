@@ -26,27 +26,6 @@ struct SetCard: CustomStringConvertible, Equatable
                 lhs.shading == rhs.shading
     }
     
-    static func cardsAreASet(first: SetCard, second: SetCard, third: SetCard) -> Bool {
-        // Either everything is different OR one of the 4 attributes is consistant across the 3 cards
-        if(
-            (first.shape != second.shape && first.shape != third.shape) &&
-            (first.color != second.color && first.color != third.color) &&
-            (first.number != second.number && first.number != third.number) &&
-            (first.shading != second.shading && first.shading != third.shading)
-            ) {
-            return true
-        } else if(
-            (first.shape == second.shape && first.shape == third.shape) ||
-                (first.color == second.color && first.color == third.color) ||
-                (first.number == second.number && first.number == third.number) ||
-                (first.shading == second.shading && first.shading == third.shading)
-            ) {
-            return true
-        } else {
-            return false
-        }        
-    }
-    
     enum Shape: Int, CustomStringConvertible {
         var description: String { return "shape: \(self.rawValue)" }
         

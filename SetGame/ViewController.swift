@@ -10,10 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-//    private(set) var deck = SetDeck()
-//    private(set) var selectedCards = [SetCard]()
-//    private(set) var matchedCards = [SetCard]()
-//    private(set) var cardsInPlay = [SetCard]()
+    private var selectedButtons = [UIButton]()
     
     private lazy var game = SetEngine()
     
@@ -42,22 +39,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //setup the first 12 cards when the game starts
-        for button in 0...11 {
-            //set the first twelve cards to have a thin black background
-            cardButtons[button].layer.borderWidth = Constants.normalBorderWidth
-            cardButtons[button].layer.borderColor = Constants.normalBorderColor
-            cardButtons[button].layer.cornerRadius = Constants.cornerRadius
-            
-            //get 12 cards out of the deck and display them
-            if let card = game.draw() {
-                let title = make(card: card) ?? NSAttributedString(string: "??")
-                cardButtons[button].setAttributedTitle(title, for: .normal)
-            } else {
-                print("No more cards in the deck!")
-            }
+        for buttonIndex in 0...11 {
+            game.draw()
+            setInitialBorders(for: cardButtons[buttonIndex])
         }
+        updateViewFromModel()
     }
     
     // Function takes the input from the SetCard model and translates it to something that
@@ -112,40 +99,78 @@ class ViewController: UIViewController {
         // Figure out what card the user clicked on
         if let buttonIndex = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: buttonIndex)
+            let button = cardButtons[buttonIndex]
             // change it to selected or de-selected
-            updateView()
+            if(selectedButtons.contains(cardButtons[buttonIndex])) {
+                // de-select a button that was already selected
+                button.layer.borderWidth = Constants.normalBorderWidth
+                button.layer.borderColor = Constants.normalBorderColor
+                // remove that button from the selectedButtonsArray
+                selectedButtons.remove(at: selectedButtons.firstIndex(of: sender)!)
+            } else {
+                if(buttonIndex < game.cardsInPlay.count) {
+                    // mark the button as selected
+                    button.layer.borderWidth = Constants.selectedBorderWidth
+                    button.layer.borderColor = Constants.selectedBorderColor
+                    // add the button to the selectedButtonsArray
+                    selectedButtons.append(button)
+                }
+            }
+            
+            if selectedButtons.count == 3 {
+                game.checkForAMatch()
+                selectedButtons.forEach() {
+                    $0.layer.borderWidth = Constants.normalBorderWidth
+                    $0.layer.borderColor = Constants.normalBorderColor
+                }
+                selectedButtons.removeAll()
+                updateViewFromModel()
+            }
+            
         } else {
             print("Could not identify the selected card")
         }
     }
     
-    private func updateView() {
-        // Iterate through each cardButton to figure out if it should be selected or not
-        for index in cardButtons.indices {
-            // the index of the button should be the same index used in the cardsInPlay
-            // providing the SetCard to check against the selectedCards array
-            if index < game.cardsInPlay.count {
-                let button = cardButtons[index]
-                let card = game.cardsInPlay[index]
-                
-                // Modify the button properties based on whether or not its card is selected
-                if game.selectedCards.contains(card) {
-                    button.layer.borderWidth = Constants.selectedBorderWidth
-                    button.layer.borderColor = Constants.selectedBorderColor
-                } else {
-                    button.layer.borderWidth = Constants.normalBorderWidth
-                    button.layer.borderColor = Constants.normalBorderColor
-                }
-            }
-            
+    private func setInitialBorders(for button: UIButton) {
+        button.layer.borderWidth = Constants.normalBorderWidth
+        button.layer.borderColor = Constants.normalBorderColor
+        button.layer.cornerRadius = Constants.cornerRadius
+    }
+    
+    private func markButtonAsSelectedOrDeSelected(forButtonAtIndex buttonIndex: Int) {
+        let card = game.cardsInPlay[buttonIndex]
+        let button = cardButtons[buttonIndex]
+        
+        if(game.selectedCards.contains(card)) {
+            button.layer.borderWidth = Constants.selectedBorderWidth
+            button.layer.borderColor = Constants.selectedBorderColor
+        } else {
+            button.layer.borderWidth = Constants.normalBorderWidth
+            button.layer.borderColor = Constants.normalBorderColor
         }
         
+    }
+    
+    private func updateViewFromModel() {
+        for buttonIndex in cardButtons.indices {
+            let button = cardButtons[buttonIndex]
+            
+            if buttonIndex < game.cardsInPlay.count {
+                let card = game.cardsInPlay[buttonIndex]
+                button.setAttributedTitle(make(card: card), for: .normal)
+            } else {
+                button.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+                button.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
+                button.layer.borderWidth = 0
+            }
+        }
         
-        
-        
-        
-        
-        
+//        for index in game.cardsInPlay.indices {
+//            let card = game.cardsInPlay[index]
+//            let button = cardButtons[index]
+//            button.setAttributedTitle(make(card: card), for: .normal)
+//        }
     }
     
 }
