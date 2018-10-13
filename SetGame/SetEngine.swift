@@ -50,7 +50,6 @@ struct SetEngine {
             if !selectedCards.contains(selectedCard) {
                 // Add it to the selected cards array
                 selectedCards.append(selectedCard)
-                print("selectedCards: \(selectedCards)")
             } else {
                 //If card was already selected, find its index and remove it from selectedCards
                 let indexInSelectedCards = selectedCards.firstIndex(of: selectedCard)!

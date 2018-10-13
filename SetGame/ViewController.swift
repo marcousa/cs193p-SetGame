@@ -15,8 +15,6 @@ class ViewController: UIViewController {
             if(selectedButtons.count == 3) {
                 if(game.checkForAMatch()) {
                     selectedButtons.forEach() { $0.layer.borderColor = Constants.matcheddBorderColor }
-                    clearSelectedButtons()
-                    updateViewFromModel()
                 } else {
                     selectedButtons.forEach() { $0.layer.borderColor = Constants.unmatchedBorderColor }
                 }
@@ -124,49 +122,6 @@ class ViewController: UIViewController {
         
     }
     
-    
-    func test(_ sender: UIButton) {
-        // Figure out what card the user clicked on
-        if let buttonIndex = cardButtons.firstIndex(of: sender) {
-            game.chooseCard(at: buttonIndex)
-            let button = cardButtons[buttonIndex]
-            // change it to selected or de-selected
-            if(selectedButtons.contains(cardButtons[buttonIndex])) {
-                // de-select a button that was already selected
-                button.layer.borderWidth = Constants.normalBorderWidth
-                button.layer.borderColor = Constants.normalBorderColor
-                // remove that button from the selectedButtonsArray
-                selectedButtons.remove(at: selectedButtons.firstIndex(of: sender)!)
-            } else {
-                // if the card is not already selected
-                // check if there are already 3 selected cards, if not then the card can be selected
-                if(selectedButtons.count < 3) {
-                    // figure out if the button is an active card or not
-                    if(buttonIndex < game.cardsInPlay.count) {
-                        // if the button is an active card mark the button as selected
-                        button.layer.borderWidth = Constants.selectedBorderWidth
-                        button.layer.borderColor = Constants.selectedBorderColor
-                        // add the button to the selectedButtonsArray
-                        selectedButtons.append(button)
-                        print("Added a button, there are now \(selectedButtons.count) in the selectedButtons array")
-                    }
-                } else {
-                    // if 3 buttons have been selected, check for a match
-                    if selectedButtons.count == 3 {
-                        if(game.checkForAMatch()) {
-                            selectedButtons.forEach() { $0.layer.borderColor = Constants.matcheddBorderColor }
-                        } else {
-                            selectedButtons.forEach() { $0.layer.borderColor = Constants.unmatchedBorderColor }
-                        }
-                        
-                    }
-                }
-            }
-        } else {
-            print("Could not identify the selected card")
-        }
-    }
-    
     private func selectOrDeSelectButton(atIndex buttonIndex: Int) {
         let button = cardButtons[buttonIndex]
         if selectedButtons.contains(button) {
@@ -186,20 +141,26 @@ class ViewController: UIViewController {
     }
     
     private func clearSelectedButtons() {
+        print("fired the clearSelectedButtons() function")
         selectedButtons.forEach() {
             resetBorders(forButton: $0)
         }
     }
+    
+    private func redrawButtonBorders() {
+        for buttonIndex in game.cardsInPlay.indices {
+            let button = cardButtons[buttonIndex]
+            resetBorders(forButton: button)
+        }
+    }
 
     @IBAction private func touchCard(_ sender: UIButton) {
-        print("nubmer of selectedButtons: \(selectedButtons.count)")
         // figure out the button that was selected
         if let buttonIndex = cardButtons.firstIndex(of: sender) {
             // if there are less than 3 cards selected, then select it
             if(selectedButtons.count < 3) {
                 if(buttonIndex < game.cardsInPlay.count) {
                     // mark the card shown on the button as selected or unselected
-                    print("In the < 2 condition")
                     game.chooseCard(at: buttonIndex)
                     selectOrDeSelectButton(atIndex: buttonIndex)
                 } else {
@@ -208,24 +169,11 @@ class ViewController: UIViewController {
                 
             } else {
                 // deselect all the cards
-                clearSelectedButtons()
+                redrawButtonBorders()
                 selectedButtons.removeAll()
+                updateViewFromModel()
                 touchCard(sender)
             }
-            
-//            if(selectedButtons.count == 3) {
-//                print("In the == 3 condition")
-//                game.chooseCard(at: buttonIndex)
-//                selectOrDeSelectButton(atIndex: buttonIndex)
-//                if(game.checkForAMatch()) {
-//                    print("In the TRUE area of checkforAMatch condition")
-//                    selectedButtons.forEach() { $0.layer.borderColor = Constants.matcheddBorderColor }
-//                } else {
-//                    print("In the FALSE area of checkforAMatch condition")
-//                    selectedButtons.forEach() { $0.layer.borderColor = Constants.unmatchedBorderColor }
-//                }
-//            }
-            
         } else {
             // a button outside the playable range was selected
             print("Could not identify selected card")
