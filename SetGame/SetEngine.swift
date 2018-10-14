@@ -91,29 +91,24 @@ struct SetEngine {
     
     // MARK: TODO: rework this function to use Set instead of if statements
     private func cardsAreASet(first: SetCard, second: SetCard, third: SetCard) -> Bool {
-        // Either everything is different OR one of the 4 attributes is consistant across the 3 cards
-        if(
-            (first.shape != second.shape && first.shape != third.shape) &&
-                (first.color != second.color && first.color != third.color) &&
-                (first.number != second.number && first.number != third.number) &&
-                (first.shading != second.shading && first.shading != third.shading)
-            ) {
-            print("Cards were a Set!")
-            return true
-        } else if(
-            (first.shape == second.shape && first.shape == third.shape) ||
-                (first.color == second.color && first.color == third.color) ||
-                (first.number == second.number && first.number == third.number) ||
-                (first.shading == second.shading && first.shading == third.shading)
-            ) {
-            print("Cards were a Set!")
-            return true
-        } else {
-            print("Cards were NOT a set")
-            return false
+        let cardsToMatch = [first, second, third]
+        var colorSet = Set<SetCard.Color>()
+        var numberSet = Set<SetCard.Number>()
+        var shadeSet = Set<SetCard.Shading>()
+        var shapeSet = Set<SetCard.Shape>()
+        
+        // Populate each set with the attributes for each card
+        // THe item will only be inserted if that value is not already in the set
+        for card in cardsToMatch {
+            colorSet.insert(card.color)
+            numberSet.insert(card.number)
+            shadeSet.insert(card.shading)
+            shapeSet.insert(card.shape)
         }
+        
+        // Either cards are completely different (3 for each set) or the same in all aspects except for one (1 for 1 Set and 3 for the rest)
+        return colorSet.count != 2 && numberSet.count != 2 && shadeSet.count != 2 && shapeSet.count != 2
     }
-    
 }
 
 extension Int {
