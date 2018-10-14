@@ -15,6 +15,8 @@ class ViewController: UIViewController {
             if(selectedButtons.count == 3) {
                 if(game.checkForAMatch()) {
                     selectedButtons.forEach() { $0.layer.borderColor = Constants.matcheddBorderColor }
+                    // If 3 cards have been matched, the drawing button should be reset to active
+                    disableDrawButtonIfNeeded()
                 } else {
                     selectedButtons.forEach() { $0.layer.borderColor = Constants.unmatchedBorderColor }
                 }
@@ -52,6 +54,7 @@ class ViewController: UIViewController {
     
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var drawButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,6 +121,8 @@ class ViewController: UIViewController {
         for _ in 0...2 {
             if(game.cards.count > 0 && game.cardsInPlay.count < 24) {
                 game.draw()
+                // If the deck has run out of cards then disable the draw button
+                disableDrawButtonIfNeeded()
             }
         }
         
@@ -127,6 +132,8 @@ class ViewController: UIViewController {
     
     private func selectOrDeSelectButton(atIndex buttonIndex: Int) {
         let button = cardButtons[buttonIndex]
+        // If the button you clicked on is already selected, show it as de-selected
+        // and remove it from teh selectedbuttons array. Otherwise select it and add it
         if selectedButtons.contains(button) {
             button.layer.borderWidth = Constants.normalBorderWidth
             button.layer.borderColor = Constants.normalBorderColor
@@ -176,6 +183,15 @@ class ViewController: UIViewController {
         }
     }
     
+    private func disableDrawButtonIfNeeded() {
+        // if the screen is full of cards, or there are no more cards in the deck disable the draw button
+        if(game.cardsInPlay.count == 24 || game.cards.count == 0) {
+            drawButton.isEnabled = false
+        } else {
+            drawButton.isEnabled = true
+        }
+    }
+    
     private func updateViewFromModel() {
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
@@ -193,6 +209,8 @@ class ViewController: UIViewController {
                 button.layer.borderWidth = 0
             }
         }
+        // Figure out if the draw button should be enabled or disabled
+        disableDrawButtonIfNeeded()
         scoreLabel.text = "Score: \(game.score)"
     }
     

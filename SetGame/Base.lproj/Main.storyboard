@@ -212,6 +212,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="drawButton" destination="C4v-n7-fcq" id="LeW-dI-Rmp"/>
                         <outlet property="scoreLabel" destination="ckB-5u-oIz" id="ZQD-je-20t"/>
                         <outletCollection property="cardButtons" destination="YIZ-Ra-SME" collectionClass="NSMutableArray" id="7SR-UI-T1h"/>
                         <outletCollection property="cardButtons" destination="QNi-NA-BDh" collectionClass="NSMutableArray" id="bVb-NB-vdK"/>
