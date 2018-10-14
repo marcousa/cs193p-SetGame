@@ -59,6 +59,10 @@ struct SetEngine {
             print("The selected card was not in play (not in the cardsInPlay array)")
         }
     }
+    
+    mutating func resetSelectedCards() {
+        selectedCards.removeAll()
+    }
  
     mutating func checkForAMatch() -> Bool {
         // Check for a Set

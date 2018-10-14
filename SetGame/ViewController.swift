@@ -47,6 +47,7 @@ class ViewController: UIViewController {
         static let normalBorderColor = UIColor.black.cgColor
         static let cornerRadius: CGFloat = 8.0
         static let preferredFontSize: CGFloat = 25
+        static let initialCards = 12
     }
     
     @IBOutlet private var cardButtons: [UIButton]!
@@ -55,9 +56,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setup the first 12 cards when the game starts
-        for buttonIndex in 0...11 {
+        for _ in 1...Constants.initialCards {
             game.draw()
-            setInitialBorders(for: cardButtons[buttonIndex])
         }
         updateViewFromModel()
     }
@@ -110,15 +110,18 @@ class ViewController: UIViewController {
         
         // regardless of whether there's a match or not, reset the buttons as not selected
         if(selectedButtons.count > 0) {
-            selectedButtons.forEach() {
-                $0.layer.borderWidth = Constants.normalBorderWidth
-                $0.layer.borderColor = Constants.normalBorderColor
-            }
+            selectedButtons.forEach() { resetBorders(forButton: $0) }
             selectedButtons.removeAll()
-            updateViewFromModel()
-        } else {
-            
+            game.resetSelectedCards()
         }
+        
+        for _ in 0...2 {
+            if(game.cards.count > 0 && game.cardsInPlay.count < 24) {
+                game.draw()
+            }
+        }
+        
+        updateViewFromModel()
         
     }
     
@@ -138,13 +141,6 @@ class ViewController: UIViewController {
     private func resetBorders(forButton button: UIButton) {
         button.layer.borderColor = Constants.normalBorderColor
         button.layer.borderWidth = Constants.normalBorderWidth
-    }
-    
-    private func clearSelectedButtons() {
-        print("fired the clearSelectedButtons() function")
-        selectedButtons.forEach() {
-            resetBorders(forButton: $0)
-        }
     }
     
     private func redrawButtonBorders() {
@@ -180,12 +176,6 @@ class ViewController: UIViewController {
         }
     }
     
-    private func setInitialBorders(for button: UIButton) {
-        button.layer.borderWidth = Constants.normalBorderWidth
-        button.layer.borderColor = Constants.normalBorderColor
-        button.layer.cornerRadius = Constants.cornerRadius
-    }
-    
     private func updateViewFromModel() {
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
@@ -194,6 +184,9 @@ class ViewController: UIViewController {
             if buttonIndex < game.cardsInPlay.count {
                 let card = game.cardsInPlay[buttonIndex]
                 button.setAttributedTitle(make(card: card), for: .normal)
+                button.layer.borderWidth = Constants.normalBorderWidth
+                button.layer.borderColor = Constants.normalBorderColor
+                button.layer.cornerRadius = Constants.cornerRadius
             } else {
                 button.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
                 button.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
