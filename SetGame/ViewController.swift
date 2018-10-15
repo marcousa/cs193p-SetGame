@@ -207,7 +207,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func hintButtonPressed(_ sender: UIButton) {
-        print("There are \(game.determineSetsOnTable()) sets on the table")
         // figure out if there are any sets that can be made
         if let hintSetIndicies = game.getIndexOfFirstAvailableSet() {
             // if there are, pick the first set and shade the cardButtons to show it to the user

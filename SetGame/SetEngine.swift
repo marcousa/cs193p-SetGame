@@ -134,7 +134,7 @@ struct SetEngine {
         cardsInPlay.removeAll()
     }
     
-    mutating func determineSetsOnTable() -> Int {
+    private mutating func determineSetsOnTable() -> Int {
         availableSets.removeAll()
         
         for firstCardIndex in 0..<cardsInPlay.count {

@@ -242,32 +242,36 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckB-5u-oIz">
-                                <rect key="frame" x="133.66666666666666" y="684" width="107.66666666666666" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QbX-Hb-f1n">
-                                <rect key="frame" x="165" y="629" width="45" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Hint"/>
-                                <connections>
-                                    <action selector="hintButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7O4-Bv-eGf"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="rEA-Tq-5KL">
+                                <rect key="frame" x="64.000000000000014" y="678" width="247.33333333333337" height="42"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckB-5u-oIz">
+                                        <rect key="frame" x="0.0" y="0.0" width="107.66666666666667" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QbX-Hb-f1n">
+                                        <rect key="frame" x="139.66666666666666" y="0.0" width="107.66666666666666" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="Hint"/>
+                                        <connections>
+                                            <action selector="hintButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7O4-Bv-eGf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Mqx-fc-wks" secondAttribute="bottom" constant="8" id="Hdz-Qs-fJt"/>
                             <constraint firstItem="VyS-xm-T3G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="L25-BA-Y4e"/>
+                            <constraint firstItem="Mqx-fc-wks" firstAttribute="top" secondItem="rEA-Tq-5KL" secondAttribute="bottom" constant="8" symbolic="YES" id="R17-ps-c8A"/>
                             <constraint firstItem="Mqx-fc-wks" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="SDn-b4-VKt"/>
-                            <constraint firstItem="Mqx-fc-wks" firstAttribute="top" secondItem="ckB-5u-oIz" secondAttribute="bottom" constant="8" symbolic="YES" id="eba-bk-k1C"/>
-                            <constraint firstItem="ckB-5u-oIz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VyS-xm-T3G" secondAttribute="bottom" constant="8" id="hRl-E0-yVl"/>
-                            <constraint firstItem="ckB-5u-oIz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="rEE-q1-ARe"/>
+                            <constraint firstItem="rEA-Tq-5KL" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="m7j-ha-aMQ"/>
                             <constraint firstItem="VyS-xm-T3G" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="tfd-gy-ojg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VyS-xm-T3G" secondAttribute="trailing" constant="16" id="vuy-H6-KBz"/>
+                            <constraint firstItem="rEA-Tq-5KL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VyS-xm-T3G" secondAttribute="bottom" constant="8" symbolic="YES" id="zLM-nd-5J0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
