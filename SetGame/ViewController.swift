@@ -127,7 +127,6 @@ class ViewController: UIViewController {
         }
         
         updateViewFromModel()
-        
     }
     
     private func selectOrDeSelectButton(atIndex buttonIndex: Int) {
@@ -190,6 +189,16 @@ class ViewController: UIViewController {
         } else {
             drawButton.isEnabled = true
         }
+    }
+    
+    
+    @IBAction func newGameTouched(_ sender: UIButton) {
+        resetGame()
+    }
+    
+    private func resetGame() {
+        game.resetGame()
+        viewDidLoad()
     }
     
     private func updateViewFromModel() {

@@ -17,8 +17,8 @@ struct SetEngine {
     private(set) var score = 0
     
     private struct Constants {
-        static let scoreForSet = 1
-        static let penaltyForNonSet = 1
+        static let scoreForSet = 3
+        static let penaltyForNonSet = 5
     }
     
     init() {
@@ -89,7 +89,6 @@ struct SetEngine {
         }
     }
     
-    // MARK: TODO: rework this function to use Set instead of if statements
     private func cardsAreASet(first: SetCard, second: SetCard, third: SetCard) -> Bool {
         let cardsToMatch = [first, second, third]
         var colorSet = Set<SetCard.Color>()
@@ -108,6 +107,16 @@ struct SetEngine {
         
         // Either cards are completely different (3 for each set) or the same in all aspects except for one (1 for 1 Set and 3 for the rest)
         return colorSet.count != 2 && numberSet.count != 2 && shadeSet.count != 2 && shapeSet.count != 2
+    }
+    
+    mutating func resetGame() {
+        score = 0
+        selectedCards.removeAll()
+        cards.append(contentsOf: matchedCards)
+        cards.append(contentsOf: cardsInPlay)
+        cards.shuffle()
+        matchedCards.removeAll()
+        cardsInPlay.removeAll()
     }
 }
 
