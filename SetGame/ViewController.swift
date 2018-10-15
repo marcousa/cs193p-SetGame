@@ -47,6 +47,8 @@ class ViewController: UIViewController {
         static let unmatchedBorderColor = UIColor.red.cgColor
         static let normalBorderWidth: CGFloat = 1.0
         static let normalBorderColor = UIColor.black.cgColor
+        static let hintBorderWidth: CGFloat = 3.0
+        static let hintBorderColor = UIColor.magenta.cgColor
         static let cornerRadius: CGFloat = 8.0
         static let preferredFontSize: CGFloat = 25
         static let initialCards = 12
@@ -59,9 +61,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setup the first 12 cards when the game starts
-        for _ in 1...Constants.initialCards {
-            game.draw()
-        }
+        game.setupGame()
         updateViewFromModel()
     }
     
@@ -149,6 +149,11 @@ class ViewController: UIViewController {
         button.layer.borderWidth = Constants.normalBorderWidth
     }
     
+    private func createHintBorders(forButton button: UIButton) {
+        button.layer.borderColor = Constants.hintBorderColor
+        button.layer.borderWidth = Constants.hintBorderWidth
+    }
+    
     private func redrawButtonBorders() {
         for buttonIndex in game.cardsInPlay.indices {
             let button = cardButtons[buttonIndex]
@@ -203,9 +208,20 @@ class ViewController: UIViewController {
     
     @IBAction func hintButtonPressed(_ sender: UIButton) {
         print("There are \(game.determineSetsOnTable()) sets on the table")
-        for set in game.availableSets {
-            print(set)
+        // figure out if there are any sets that can be made
+        if let hintSetIndicies = game.getIndexOfFirstAvailableSet() {
+            // if there are, pick the first set and shade the cardButtons to show it to the user
+            hintSetIndicies.forEach() { createHintBorders(forButton: cardButtons[$0]) }
+        } else {
+            // if there are no sets available, show an alert to the user with the information
+            let alert = UIAlertController(title: "No sets available", message: "No sets can be made with the cards currently on the table", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert,animated: true)
+            
         }
+        
     }
     
     

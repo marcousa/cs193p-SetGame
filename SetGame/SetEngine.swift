@@ -20,6 +20,7 @@ struct SetEngine {
     private struct Constants {
         static let scoreForSet = 3
         static let penaltyForNonSet = 5
+        static let penaltyForDrawingWhenSetIsAvailable = 1
     }
     
     init() {
@@ -35,8 +36,21 @@ struct SetEngine {
         cards.shuffle()
     }
     
+    // Use a different function to setup the game rather than just drawing
+    // since the draw function now penalizes the user if there are sets available
+    mutating func setupGame() {
+        for _ in 0...11 {
+            let cardDrawn = cards.remove(at: cards.count.arc4random)
+            cardsInPlay.append(cardDrawn)
+        }
+    }
+    
     mutating func draw() {
         if cards.count > 0 {
+            // penalize the user if there is at least 1 set in the cards currently on the table
+            if(determineSetsOnTable() > 0) {
+                score -= Constants.penaltyForDrawingWhenSetIsAvailable
+            }
             let cardDrawn = cards.remove(at: cards.count.arc4random)
             cardsInPlay.append(cardDrawn)
         }
@@ -121,7 +135,8 @@ struct SetEngine {
     }
     
     mutating func determineSetsOnTable() -> Int {
-
+        availableSets.removeAll()
+        
         for firstCardIndex in 0..<cardsInPlay.count {
             for secondCardIndex in (firstCardIndex + 1)..<cardsInPlay.count {
                 for thirdCardIndex in (secondCardIndex + 1)..<cardsInPlay.count {
@@ -136,7 +151,27 @@ struct SetEngine {
         }
         
         return availableSets.count
+    }
+    
+    mutating func getIndexOfFirstAvailableSet() -> [Int]? {
+        let possibleSets = determineSetsOnTable()
         
+        if possibleSets > 0 {
+            let firstSet = availableSets.first!
+            let firstCard = cardsInPlay.firstIndex(of: firstSet[0])
+            let secondCard = cardsInPlay.firstIndex(of: firstSet[1])
+            let thirdCard = cardsInPlay.firstIndex(of: firstSet[2])
+            
+            if  let firstIndex = firstCard,
+                let secondIndex = secondCard,
+                let thirdIndex = thirdCard {
+                    return [firstIndex, secondIndex, thirdIndex]
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
     }
     
 }
