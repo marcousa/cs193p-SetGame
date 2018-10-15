@@ -15,6 +15,7 @@ struct SetEngine {
     private(set) var matchedCards = [SetCard]()
     private(set) var cardsInPlay = [SetCard]()
     private(set) var score = 0
+    private(set) var availableSets: [[SetCard]] = []
     
     private struct Constants {
         static let scoreForSet = 3
@@ -118,6 +119,26 @@ struct SetEngine {
         matchedCards.removeAll()
         cardsInPlay.removeAll()
     }
+    
+    mutating func determineSetsOnTable() -> Int {
+
+        for firstCardIndex in 0..<cardsInPlay.count {
+            for secondCardIndex in (firstCardIndex + 1)..<cardsInPlay.count {
+                for thirdCardIndex in (secondCardIndex + 1)..<cardsInPlay.count {
+                    let firstCard = cardsInPlay[firstCardIndex]
+                    let secondCard = cardsInPlay[secondCardIndex]
+                    let thirdCard = cardsInPlay[thirdCardIndex]
+                    if(cardsAreASet(first: firstCard, second: secondCard, third: thirdCard)) {
+                        availableSets.append([firstCard, secondCard, thirdCard])
+                    }
+                }
+            }
+        }
+        
+        return availableSets.count
+        
+    }
+    
 }
 
 extension Int {
