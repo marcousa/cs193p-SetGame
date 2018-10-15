@@ -202,6 +202,9 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
+        // order all the buttons by tag since the StackView seems to place them out of order
+        cardButtons.sort { $0.tag < $1.tag }
+        
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
             // if the button is beyond the range of the cards in play, make it transparent
